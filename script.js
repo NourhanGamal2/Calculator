@@ -1,58 +1,24 @@
-let currentNumber = '';
-let previousNumber = '';
-let operation = null;
+let displayValue = '0';
 
-function appendNumber(number) {
-  if (currentNumber.length >= 12) return;
-  currentNumber += number;
-  updateDisplay();
-}
-
-function setOperation(op) {
-  if (currentNumber === '') return;
-  if (previousNumber !== '') calculate();
-  operation = op;
-  previousNumber = currentNumber;
-  currentNumber = '';
-}
-
-function calculate() {
-  let result;
-  const prev = parseFloat(previousNumber);
-  const curr = parseFloat(currentNumber);
-
-  if (isNaN(prev) || isNaN(curr)) return;
-
-  switch (operation) {
-    case '+':
-      result = prev + curr;
-      break;
-    case '-':
-      result = prev - curr;
-      break;
-    case '*':
-      result = prev * curr;
-      break;
-    case '/':
-      result = curr === 0 ? 'Error' : prev / curr;
-      break;
-    default:
-      return;
+function appendToDisplay(value) {
+  if (displayValue === '0') {
+    displayValue = value;
+  } else {
+    displayValue += value;
   }
-
-  currentNumber = result.toString();
-  operation = null;
-  previousNumber = '';
-  updateDisplay();
+  document.getElementById('display').textContent = displayValue;
 }
 
 function clearDisplay() {
-  currentNumber = '';
-  previousNumber = '';
-  operation = null;
-  updateDisplay();
+  displayValue = '0';
+  document.getElementById('display').textContent = displayValue;
 }
 
-function updateDisplay() {
-  document.getElementById('display').innerText = currentNumber || '0';
+function calculateResult() {
+  try {
+    displayValue = eval(displayValue).toString();
+    document.getElementById('display').textContent = displayValue;
+  } catch (error) {
+    document.getElementById('display').textContent = 'Error';
+  }
 }
