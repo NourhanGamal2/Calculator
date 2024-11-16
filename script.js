@@ -21,4 +21,5 @@ function calculateResult() {
   } catch (error) {
     document.getElementById('display').textContent = 'Error';
   }
+  
 }
